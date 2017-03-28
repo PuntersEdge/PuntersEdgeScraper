@@ -7,7 +7,7 @@ Imports System.Data.SqlClient
 
 Public Module GlobalVars
 
-    Public con As New SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
+    Public con As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
     Public command As New SqlCommand
 
 End Module
@@ -79,7 +79,7 @@ Public Class DatabseActions
 
         Dim strSql As String = "SELECT " & ColumnsToSelect & " FROM " & table & " " & whereClause
         Dim Resultset As New DataTable
-        Using cnn As New SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
+        Using cnn As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
             cnn.Open()
             Using dad As New SqlDataAdapter(strSql, cnn)
                 dad.Fill(Resultset)
@@ -96,7 +96,7 @@ Public Class DatabseActions
 
         Dim strSql As String = "SELECT " & ColumnsToSelect & " FROM " & table & " " & whereClause
         Dim Resultset As String
-        Using cnn As New SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
+        Using cnn As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
             cnn.Open()
 
             command.CommandText = strSql
@@ -146,7 +146,7 @@ Public Class DatabseActions
     End Sub
     Public Sub SELECT_INTO(ByVal Table As String, ByVal columns As String, ByVal FromSQL As String)
 
-        Using connection As New SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
+        Using connection As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
 
             command.CommandText = "SELECT " & columns & " INTO " & Table & " FROM (" & FromSQL & ")"
             command.Connection = connection

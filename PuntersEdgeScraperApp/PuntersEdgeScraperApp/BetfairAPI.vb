@@ -3,7 +3,8 @@ Imports System.Net
 Imports System.Web.Script.Serialization
 Imports System.IO
 Imports System.Data.SqlClient
-Imports PunterEdge.DatabseActions
+Imports System.Text
+Imports PuntersEdgeScraperApp.DatabseActions
 
 
 
@@ -40,7 +41,7 @@ Public Class BetfairAPI
 
     Public Function GetSessionKey(AppKey As String, postData As String)
 
-        Dim con As New SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
+        Dim con As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString)
         Dim command As New SqlCommand
         Dim SessionKey As String
 

@@ -15,6 +15,12 @@ Imports Newtonsoft.Json.Linq
 Imports PuntersEdgeScraperApp.DatabseActions
 Imports System.Data.SqlClient
 
+Public Module GlobalVariables
+    Public SessionToken As String
+    Public Appkey As String = "ZfI8hcEMs3uAzPmD"
+    Public Threadcount As Int16 = 0
+End Module '
+
 Module Module1
 
     Sub Main()
@@ -27,6 +33,9 @@ Module Module1
         Dim Time As String = Format(Date.Now, "HH:mm")
         Dim marketIds As DataTable = database.SELECTSTATEMENT("MarketID", "BetfairMarketIds", "WHERE RaceTime > '" & Time & "'")
         Dim API As New BetfairAPI
+
+
+        SessionToken = API.GetSessionKey("ZfI8hcEMs3uAzPmD", "username=00alawre&password=portsmouth1")
 
         database.SQL("TRUNCATE TABLE ProcessLog")
         '-------------------------------------------------------------------------------------------------------------------
@@ -46,7 +55,7 @@ Module Module1
 
         '-----------------------------------------------------------------------------------------------------------------------------
 
-        Dim con As New SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString) 'connection string
+        Dim con As New SqlClient.SqlConnection(Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString) 'connection string
 
         Dim command As SqlCommand = New SqlCommand
         Dim dt As New DataSet
@@ -173,7 +182,7 @@ Module Module1
 
 
         'Pull out the races for the meeting passed in -----------------------------------------------------------------------------------------------------
-        Dim con As New SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString) 'connection string
+        Dim con As New SqlClient.SqlConnection(Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString) 'connection string
         Dim command As SqlCommand = New SqlCommand
         Dim dt As New DataSet
         Dim cmd As String = "SELECT Meeting, CONVERT(varchar(5), RaceTime, 108) As RaceTime FROM TodaysRaces WHERE Meeting='" & Meeting & "'"
@@ -202,7 +211,7 @@ Module Module1
 
         'Second Thread
         Dim t2 As New Threading.Thread(AddressOf MT_Update)
-        t2.IsBackground = True
+        t2.IsBackground = False
 
         t2.Start(Meeting & "," & Half2)
 
@@ -226,7 +235,7 @@ Module Module1
         Dim Sort As String = parts(2).ToString
 
         'Pull out the races for the meeting passed in -----------------------------------------------------------------------------------------------------
-        Dim con As New SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString) 'connection string
+        Dim con As New SqlClient.SqlConnection(Configuration.ConfigurationManager.ConnectionStrings("PuntersEdgeDB").ConnectionString) 'connection string
         Dim command As SqlCommand = New SqlCommand
         Dim dt As New DataSet
         Dim RowsAffected As Int16 = 0
