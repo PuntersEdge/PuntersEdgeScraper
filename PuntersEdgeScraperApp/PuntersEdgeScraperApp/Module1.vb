@@ -45,7 +45,7 @@ Module Module1
 
         For Each marketID_row As DataRow In marketIds.Rows()
 
-
+            'Call BetfairOddsUpdater(marketID_row)
 
             Dim Thread As New Threading.Thread(AddressOf BetfairOddsUpdater)
             Thread.IsBackground = False
