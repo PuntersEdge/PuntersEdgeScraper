@@ -342,7 +342,7 @@ RetryThread:
                 If Convert.ToDateTime(Time) < DateAdd(DateInterval.Minute, -3, DateTime.Now) Then
 
                     'db.UPDATE("Results", "Result", "-1", "WHERE Time='" & Time & "'")
-                    command.CommandText = "UPDATE Results SET Result ='-1' WHERE Time = '" & Time & "'"
+                    command.CommandText = "UPDATE Results SET Result ='-1' WHERE Time = '" & Time & "' AND Result <> 'NR'"
                     command.Connection = con
 
                     con.Open()
